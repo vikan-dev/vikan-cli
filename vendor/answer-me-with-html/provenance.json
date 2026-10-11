@@ -1,0 +1,66 @@
+{
+  "repository": "https://github.com/QingYunA/answer-me-with-html",
+  "commit": "533c39fd47d814a6bee3d9c1df388345f4e4c858",
+  "version": "0.5.0",
+  "upstreamBundlePath": "skills/answer-me-with-html/scripts/am.mjs",
+  "bundle": {
+    "path": "am.mjs",
+    "sha256": "8a52581ca87beeffa19fd5bdb1d8da3cee75ae9ef41e7d7277471c305fd4fa92",
+    "byteSize": 575084,
+    "modified": false
+  },
+  "license": {
+    "path": "LICENSE.txt",
+    "upstreamPath": "LICENSE",
+    "sha256": "752a1a34b40ae8e64e86f546ec699a691aff573179e1f96997e82757b2ee5d3f"
+  },
+  "thirdPartyNotices": {
+    "path": "THIRD_PARTY_NOTICES.txt",
+    "sha256": "5f3e8b7987e33dd399fe904af4f1461e28fd51a04985bbe92c32f1b5f6ae1b8c"
+  },
+  "dependencies": [
+    {
+      "name": "@dagrejs/dagre",
+      "version": "3.1.1",
+      "license": "MIT",
+      "archiveUrl": "https://registry.npmjs.org/@dagrejs/dagre/-/dagre-3.1.1.tgz",
+      "archiveIntegrity": "sha512-zroZB1dFOFiGgv4Xcrn1DckB1o4aOikPqD2NDQPV0WM//CXGcS6xiD0rNkqHmw6FEg4tabt4nxPLwgCWT+Vb2A==",
+      "licenseFiles": [
+        {
+          "path": "package/LICENSE",
+          "sha256": "6a349742a6cb219d5a2fc8d0844f6d89a6efc62e20c664450d884fc7ff2d6015"
+        },
+        {
+          "path": "package/dist/dagre.esm.js.LEGAL.txt",
+          "sha256": "9148bffb1e84382a8b6668eeb2b53c6a554341d714fba129856ea5eb350d35f3"
+        }
+      ]
+    },
+    {
+      "name": "@dagrejs/graphlib",
+      "version": "4.0.5",
+      "license": "MIT",
+      "archiveUrl": "https://registry.npmjs.org/@dagrejs/graphlib/-/graphlib-4.0.5.tgz",
+      "archiveIntegrity": "sha512-7xrBTqIts3o+PMUZX97wSc+7TUbW+/rULzGNCTP6yooNVDXbzw4Wutg/H/xOutTB/c/k0YqOAavgPh4/Zk9PFA==",
+      "licenseFiles": [
+        {
+          "path": "package/LICENSE",
+          "sha256": "6a349742a6cb219d5a2fc8d0844f6d89a6efc62e20c664450d884fc7ff2d6015"
+        }
+      ]
+    },
+    {
+      "name": "marked",
+      "version": "18.0.14",
+      "license": "MIT",
+      "archiveUrl": "https://registry.npmjs.org/marked/-/marked-18.0.14.tgz",
+      "archiveIntegrity": "sha512-mBHK6FBHuBAlhgRe88w9F0O1AbwwXJUcQibUbC/QcdTbVGAD7aWza+xt3N6oT/jCZx3/OMeS+8rnuiHZcQ9s7A==",
+      "licenseFiles": [
+        {
+          "path": "package/LICENSE",
+          "sha256": "8e3a3f82f59a60958f56ca08f445647c32a4733dc7ca6c2c46f6eb898471ab9c"
+        }
+      ]
+    }
+  ]
+}

@@ -131,7 +131,9 @@ export class RunnerWorld {
       retryMs: 10,
     })
     this.runner = runner
-    void runner.run().catch(() => undefined)
+    void runner.run().catch(error => {
+      this.err.push(`Runner failed: ${error instanceof Error ? error.message : String(error)}\n`)
+    })
     await waitFor(() => this.runtime.sessions.some((session) => session.endedAt === null))
     return runner
   }

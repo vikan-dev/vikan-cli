@@ -12,6 +12,23 @@ let world: RunnerWorld | undefined
 const roots: string[] = []
 afterEach(async () => { await world?.destroy(); world = undefined; for (const root of roots.splice(0)) rmSync(root, { recursive: true, force: true }) })
 
+// These checks perform real HTTP and fsync-backed journal writes. Leave time
+// outside the bounded waiter for initialization, diagnostics and cleanup.
+const RUNNER_TEST_TIMEOUT_MS = 15_000
+
+async function waitForFirstPrompt(current: RunnerWorld): Promise<void> {
+  try {
+    await waitFor(() => {
+      if (current.err.length > 0) throw new Error('Runner stopped before delivering the prompt')
+      return current.adapter.promptCountTotal() === 1
+    }, 5_000, 'the first agent prompt')
+  } catch (error) {
+    const runs = current.runtime.runs.map(({ runId, status, runVersion, claimEpoch }) => ({ runId, status, runVersion, claimEpoch }))
+    throw new Error(`${error instanceof Error ? error.message : String(error)}\n` +
+      `Runs: ${JSON.stringify(runs)}\nRunner output:\n${current.out.join('')}\nRunner errors:\n${current.err.join('')}`, { cause: error })
+  }
+}
+
 it('deliverables help and malformed arguments need no pairing, network or credentials', async () => {
   const root = tempConfigRoot(); roots.push(root)
   let called = false
@@ -56,12 +73,12 @@ it('issue guidance is delivered once, survives acknowledged restart, and never d
   world.runtime.sendContinue(runId, { prompt: 'Also validate mobile', expectedRunVersion: world.runtime.runs[0]!.runVersion })
   await waitFor(() => world!.adapter.promptCountTotal() === 2)
   expect(world.adapter.events.filter(e => e.kind === 'prompt').map(e => e.prompt)).toEqual([prompt, 'Also validate mobile'])
-})
+}, RUNNER_TEST_TIMEOUT_MS)
 
 it('issue-less explore runs preserve the topic when appending findings instructions', async () => {
   world = new RunnerWorld()
   const { runId } = world.runtime.queueRun({ prompt: 'Explore search performance' })
-  await world.startRunner(); await waitFor(() => world!.adapter.promptCountTotal() === 1)
+  await world.startRunner(); await waitForFirstPrompt(world)
   const prompt = world.adapter.events.find(e => e.kind === 'prompt')!.prompt!
   expect(prompt.startsWith('Explore search performance')).toBe(true)
   expect(prompt).toContain('# vikan run findings')
@@ -70,7 +87,7 @@ it('issue-less explore runs preserve the topic when appending findings instructi
   expect(prompt).not.toContain('# vikan issue deliverables')
   expect(prompt).not.toContain('render-plan')
   expect(prompt).not.toContain(world.fakeApi.state.credential!)
-})
+}, RUNNER_TEST_TIMEOUT_MS)
 
 it('project-document starts keep their document publisher without visual Plan guidance', async () => {
   world = new RunnerWorld()
@@ -84,14 +101,14 @@ it('project-document starts keep their document publisher without visual Plan gu
     } })
   }
   const { runId } = world.runtime.queueRun({ prompt: 'Revise the document' })
-  await world.startRunner(); await waitFor(() => world!.adapter.promptCountTotal() === 1)
+  await world.startRunner(); await waitForFirstPrompt(world)
   const prompt = world.adapter.events.find(e => e.kind === 'prompt')!.prompt!
   expect(prompt).toContain('# vikan project document')
   expect(prompt).toContain(documentId)
   expect(prompt).toContain(`project-document --run ${runId}`)
   expect(prompt).not.toContain('render-plan')
   expect(prompt).not.toContain('# vikan run findings')
-})
+}, RUNNER_TEST_TIMEOUT_MS)
 
 it('untrusted proxy/auth-looking responses never establish a domain refusal', async () => {
   for (const response of [new Response('Proxy rejected request', { status: 401 }),

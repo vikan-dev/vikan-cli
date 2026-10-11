@@ -8,7 +8,15 @@ This is the standalone open-source repository for `@vikan/cli`. The HTTP protoco
 
 ## Installation
 
-Requires Bun 1.4.2 or later. Install from Git for now; **the package has not been published to npm yet**.
+Requires Bun 1.4.2 or later. Install from npm:
+
+```sh
+bun add --global @vikan/cli
+vikan --version
+vikan --help
+```
+
+You can also install from Git:
 
 ```sh
 git clone https://github.com/vikan-dev/vikan-cli.git

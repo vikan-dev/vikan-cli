@@ -10,7 +10,15 @@
 
 ## 安装
 
-需要 Bun 1.4.2 或更高版本。当前通过 Git 安装，**尚未发布到 npm**。
+需要 Bun 1.4.2 或更高版本。从 npm 安装：
+
+```sh
+bun add --global @vikan/cli
+vikan --version
+vikan --help
+```
+
+也可以通过 Git 安装：
 
 ```sh
 git clone https://github.com/vikan-dev/vikan-cli.git

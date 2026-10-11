@@ -1,6 +1,6 @@
 # 维护与发布
 
-公开仓库为 `vikan-dev/vikan-cli`，包名为 `@vikan/cli`，初始版本为 `0.1.0`。当前通过 Git 获取和安装，尚未发布到 npm；CI 只做检查，不自动发布包。
+公开仓库为 `vikan-dev/vikan-cli`，包名为 `@vikan/cli`，初始版本为 `0.1.0`。支持从 npm 或 Git 安装；CI 只做检查，不自动发布包。
 
 ## 更新公开源码
 
@@ -19,7 +19,7 @@
 确认拟发布版本、公开访问设置和 package 内容，并从干净 checkout 运行上述全部检查。维护者通过本机 npm 登录流程完成认证，不把 token 写入源码或提交。然后执行：
 
 ```sh
-bun publish --access public
+bun publish --access public --registry https://registry.npmjs.org
 ```
 
-发布后核对 registry 中的版本和包内容，使用一个新目录验证安装及命令，再更新 README 的安装方式。此文档中的发布命令不是 CI 步骤，也不表示当前版本已经发布。
+发布后核对 registry 中的版本和包内容，使用一个新目录验证安装及命令，并保持 README 的安装方式准确。此文档中的发布命令不是 CI 步骤。若本机默认使用 npm 镜像，也必须显式指定官方 registry 发布。

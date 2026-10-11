@@ -3,6 +3,7 @@
 ## 项目边界
 
 - 品牌和产品名使用小写 **vikan**，包名为 `@vikan/cli`，环境变量前缀为 `VIKAN_*`。外部工具 Herdr、Codex、S2 使用各自真实名称。
+- 默认 `README.md` 使用英文；中文说明维护在 `README.zh-CN.md`，两份文档标题下保留双向语言导航，更新使用说明时同步两种语言。
 - 本仓库是独立 CLI。HTTP 协议、字段 schema、设备客户端及协议 helper 以公开 `@vikan/sdk/agent` 为唯一来源，不手抄 URL、请求/响应定义或复制私有 contract 源码。
 - SDK 缺少协议能力时先在 SDK/contract 的维护流程中补齐并验证，更新公开 SDK 后，再将 CLI 的 SDK Git 依赖固定到完整 commit SHA，执行 `bun install` 更新锁文件。不要依赖 workspace、私有仓库或本机绝对路径。
 - Herdr 执行、本地状态、恢复 journal、屏幕采集与交付命令留在 CLI。真实服务端/API/Postgres 集成测试不引入本仓库。
